@@ -51,13 +51,16 @@ func main() {
         sem <- true
         go func(i int){
             defer func() { <-sem }()
-            resp, code := Get(baseUrl + fmt.Sprintf("%d", i))
-            var check, info string
+            var resp, check, info string
+            var code int
+      
+            RETRY:
+            resp, code = Get(baseUrl + fmt.Sprintf("%d", i))
             m, _ := mxj.NewMapXml([]byte(resp))
 
             if m["eveapi"] == nil {
-                logger.Println(fmt.Sprintf("[ERRO] Network failure"))
-                os.Exit(10086)
+                logger.Println(fmt.Sprintf("[ERRO] Network failure for %d, retrying", i))
+                goto RETRY
             }
 
             if code == 200 {
