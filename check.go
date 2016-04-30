@@ -31,15 +31,15 @@ func Get(url string) (content string, statusCode int) {
 
 func main() {
 
-    dstFile,err := os.Create("charid.txt")
-    if err!=nil{
-        fmt.Println(err.Error())    
-        return
-    }   	
-defer dstFile.Close()
+	dstFile,err := os.Create("charid.txt")
+		if err!=nil{
+		fmt.Println(err.Error())    
+		return
+	}   	
+	defer dstFile.Close()
+
 	flag.Parse()
-	flag.Parse()
-	//concurrency := 10
+	
 	sem := make(chan bool, *concurrency)
 
 	baseUrl := "https://api.eve-online.com.cn/eve/characterinfo.xml.aspx?characterid="
