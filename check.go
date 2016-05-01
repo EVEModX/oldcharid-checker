@@ -47,7 +47,7 @@ func main() {
 
     baseUrl := "https://api.eve-online.com.cn/eve/characterinfo.xml.aspx?characterid="
 
-    for i := 100000000; i < 999999999; i++{
+    for i := 100000000; i < 999999999; i++ {
         sem <- true
         go func(i int){
             defer func() { <-sem }()
